@@ -1,0 +1,118 @@
+{
+  "pages": {
+    "Auth": {
+
+    },
+    "AccessDenied": {
+      "title": {
+        "EN": "Access Denied!",
+        "UA": "Доступ закрито!"
+      },
+      "subtitle": {
+        "EN": "You need to register to see this page. In case you are already registered user, please sign in.",
+        "UA": "Вам потрібно бути зареєстрованим щоб побачити цю сторінку. У випадку, якщо ви вже зареєстровані, будь-ласка залогіньтесь."
+      }
+    },
+    "notFound": {
+      "title": {
+        "EN": "Page not found",
+        "UA": "Сторінку не знайдено"
+      },
+      "subtitle": {
+        "EN": "Seems like the page that you looking for is deleted or even it never existed.",
+        "UA": "Здається, що сторінку, яку ви шукаєте, видалено або навіть її ніколи не існувало."
+      }
+    }
+  },
+  "components": {
+    "Header": {
+      "menu": {
+        "home": {
+          "EN": "Home",
+          "UA": "Додому"
+        }
+      },
+      "theme": {
+        "EN": "Theme",
+        "UA": "Тема"
+      }
+    },
+    "Forecast": {
+      "country": {
+        "EN": "Country",
+        "UA": "Країна"
+      },
+      "geoLocation": {
+        "lat": {
+          "EN": "Lat",
+          "UA": "Широта"
+        },
+        "lon": {
+          "EN": "Lon",
+          "UA": "Довгота"
+        }
+      },
+      "city": {
+        "EN": "City",
+        "UA": "Міcто"
+      },
+      "province": {
+        "EN": "province",
+        "UA": "Область"
+      }
+    },
+    "SearchComponent": {
+      "inputLabel": {
+        "EN": "Search town",
+        "UA": "Знайти місто"
+      }
+    },
+    "EventCard": {
+      "country": {
+        "EN": "Country",
+        "UA": "Крїана"
+      },
+      "tournament": {
+        "EN": "Tournament",
+        "UA": "Турнір"
+      },
+      "match": {
+        "EN": "Match",
+        "UA": "Матч"
+      },
+      "stadium": {
+        "EN": "Stadium",
+        "UA": "Стадіон"
+      },
+      "start": {
+        "EN": "Start at",
+        "UA": "Початок об"
+      }
+    },
+    "UserMenu": {
+      "favorites": {
+        "EN": "Favorites",
+        "UA": "Улюблене"
+      },
+      "settings": {
+        "EN": "Settings",
+        "UA": "Налаштування"
+      },
+      "logout": {
+        "EN": "Logout",
+        "UA": "Вийти"
+      }
+    },
+    "Search": {
+      "label": {
+        "EN": "Search",
+        "UA": "Пошук"
+      }
+    }
+  },
+  "hooks": {
+    "useForecastForTabs": {
+
+    }
+  }
+}

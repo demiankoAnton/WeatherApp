@@ -1,0 +1,33 @@
+header {
+  box-shadow: 0 0 15px 5px rgba(0,0,0,0.5);
+  backdrop-filter: blur(15px);
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.header {
+  display: flex;
+
+  .logoContainer {
+    margin-right: 10px;
+  }
+
+  .mainNavList {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  .authContainer,
+  .themeContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  .settingsContainer {
+    display: flex;
+    margin-right: 10px;
+    margin-left: auto;
+  }
+}

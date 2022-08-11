@@ -1,0 +1,24 @@
+.hourly {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 10px;
+  height: 150px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: navajowhite;
+  border-radius: 4px;
+}
+
+.hourTemperature {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hourTemperatureCol {
+  width: 20px;
+  background-color: yellowgreen;
+  border-radius: 3px;
+  border: 1px solid #FFFFFF;
+}
