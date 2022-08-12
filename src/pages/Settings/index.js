@@ -1,9 +1,11 @@
-import PageContainer from '../../components/PageContainer';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Grid, Paper, Typography, Select, MenuItem } from '@mui/material';
-import {useDispatch, useSelector} from 'react-redux';
-import {getUserSettings} from '../../redux/slices/userSlice/user.selectors';
-import {useEffect, useState} from 'react';
+
+import { getUserSettings } from '../../redux/slices/userSlice/user.selectors';
 import { setUserSettings } from '../../redux/slices/userSlice/user.slice';
+
+import PageContainer from '../../components/PageContainer';
 
 const initialFormState = {
   theme: '',

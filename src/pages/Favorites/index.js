@@ -1,17 +1,19 @@
-import PageContainer from '../../components/PageContainer';
-import {useDispatch} from 'react-redux';
-
-import { default as FavoritesList } from '../../components/List';
 import {useCallback} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Grid } from '@mui/material';
 
-import {Grid} from '@mui/material';
-import useEventsForList from '../../hooks/useEventsForList';
-import useCitiesForList from '../../hooks/useCitiesForList';
 import {
   removeCityFromFavorite,
   removeEventFromFavorites,
 } from '../../redux/slices/userSlice/user.slice';
-import {useNavigate} from 'react-router-dom';
+
+import useEventsForList from '../../hooks/useEventsForList';
+import useCitiesForList from '../../hooks/useCitiesForList';
+
+import PageContainer from '../../components/PageContainer';
+
+import { default as FavoritesList } from '../../components/List';
 
 const Favorites = () => {
   const dispatch = useDispatch();

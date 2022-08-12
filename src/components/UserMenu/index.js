@@ -8,8 +8,6 @@ import { logOut } from '../../redux/slices/userSlice/user.slice';
 
 import i18l from '../../l18i.json';
 
-import style from './UserMenu.module.scss';
-
 const UserMenu = () => {
   const dispatch = useDispatch();
   const language = useSelector(getUserLang);

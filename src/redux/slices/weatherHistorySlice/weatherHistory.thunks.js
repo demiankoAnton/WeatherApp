@@ -24,7 +24,7 @@ export const fetchWeatherHistory = createAsyncThunk(
 
       dispatch(setHistoryDateForecast(response));
       dispatch(setCurrentCity(response));
-      console.log(response);
+
       return response;
     } catch (error) {
       return rejectWithValue(error.message);

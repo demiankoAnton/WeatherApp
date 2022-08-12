@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Grid } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 
 import { removeCityFromFavorite } from '../../redux/slices/userSlice/user.slice';
 
@@ -12,8 +12,6 @@ import Forecast from '../../components/Forecast';
 
 import useEventsForList from '../../hooks/useEventsForList';
 import useCitiesForList from '../../hooks/useCitiesForList';
-
-import style from './Home.module.scss';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -31,7 +29,7 @@ const Home = () => {
 
   return (
     <PageContainer>
-        <div className={style.homePage}>
+        <Box py={4}>
           <div className={"container"}>
             <Grid container spacing={2} >
               <Grid item xs={12}>
@@ -53,7 +51,7 @@ const Home = () => {
               </Grid>
             </Grid>
           </div>
-        </div>
+        </Box>
     </PageContainer>
   );
 }

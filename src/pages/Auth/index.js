@@ -1,4 +1,6 @@
-import {useCallback, useState} from 'react';
+import { useCallback, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 import {
   TextField,
   Button,
@@ -9,22 +11,24 @@ import {
   Box,
   MobileStepper
 } from '@mui/material';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+
 import useUsersObject from '../../hooks/useUsersObject';
+
 import PageContainer from '../../components/PageContainer';
-import { useNavigate } from "react-router-dom";
-import {DEFAULT_USER_SETTINGS} from '../../constants';
-import {useDispatch, useSelector} from 'react-redux';
+
 import {
   addUserToList,
   setCurrentUser,
 } from '../../redux/slices/userSlice/user.slice';
-import {getUser} from '../../redux/slices/userSlice/user.selectors';
+import { getUser } from '../../redux/slices/userSlice/user.selectors';
 import {
   isError,
   isEqual,
   validateEmail,
 } from '../../utils/forms';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+
+import {DEFAULT_USER_SETTINGS} from '../../constants';
 
 const initialFormState = {
   type: "login",

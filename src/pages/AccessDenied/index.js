@@ -1,4 +1,4 @@
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Typography, Box } from '@mui/material';
 
 import { getUserLang } from '../../redux/slices/userSlice/user.selectors';

@@ -1,13 +1,11 @@
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+import { Box } from '@mui/material';
 
-import {getUserLang} from '../../redux/slices/userSlice/user.selectors';
+import { getUserLang } from '../../redux/slices/userSlice/user.selectors';
 
 import PageContainer from '../../components/PageContainer';
 
 import i18l from '../../l18i.json';
-
-import styles from './PageNotFound.module.scss';
-import { Box } from '@mui/material';
 
 const PageNotFound = () => {
   const language = useSelector(getUserLang);
@@ -21,10 +19,16 @@ const PageNotFound = () => {
         justifyContent: "center",
         height: "100%"
       }}>
-        <div className={styles.pageNotFound}>
+        <Box sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+             >
           <h2>{i18l.pages.notFound.title[language]}</h2>
           <h4>{i18l.pages.notFound.subtitle[language]}</h4>
-        </div>
+        </Box>
       </Box>
     </PageContainer>
   );

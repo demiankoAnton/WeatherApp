@@ -1,7 +1,3 @@
-// import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-
 import MUITabs from '../../components/generic/MUITabs';
 
 import PageContainer from '../../components/PageContainer';

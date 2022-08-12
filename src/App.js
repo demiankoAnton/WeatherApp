@@ -9,9 +9,6 @@ import useTheme from './hooks/useTheme';
 
 import { getIsUserLoggedIn } from './redux/slices/userSlice/user.selectors';
 
-import bgDark from './assets/images/bg-dark.jpg';
-import bgLight from './assets/images/bg-light.jpg';
-
 import Auth from './pages/Auth';
 import City from './pages/City';
 import Home from './pages/Home';
@@ -20,6 +17,10 @@ import Favorites from './pages/Favorites';
 import PageNotFound from './pages/PageNotFound';
 import ProtectedRoute from './routes/ProtectedRoute';
 import CssBaseline from '@mui/material/CssBaseline';
+
+import bgDark from './assets/images/bg-dark.jpg';
+import bgLight from './assets/images/bg-light.jpg';
+
 import './App.scss';
 
 function App() {

@@ -36,7 +36,7 @@ const EventCard = memo(({ event, eventType }) => {
       dispatch(addEventToFavorites(event));
     } else {
       setIsFavorite(false);
-      console.log(event);
+
       dispatch(removeEventFromFavorites(event.match));
     }
   }, [isFavorite]);

@@ -29,6 +29,4 @@ const weatherSearchSlice = createSlice({
   }
 });
 
-export const { /*setCurrentCity*/ } = weatherSearchSlice.actions;
-
 export default weatherSearchSlice.reducer;

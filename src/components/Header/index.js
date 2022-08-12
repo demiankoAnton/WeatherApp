@@ -25,7 +25,6 @@ const Header = memo(() => {
   const isLoggedIn = useSelector(getIsUserLoggedIn);
 
   const onClickThemeSwitch = useCallback((event) => {
-    console.log('In Switch: ', event.target.checked);
     dispatch(setTheme(event.target.checked));
   }, [dispatch, userTheme]);
 
