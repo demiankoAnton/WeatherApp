@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import useUser from './hooks/useUser';
 import useTheme from './hooks/useTheme';
@@ -29,7 +29,7 @@ function App() {
   const theme = useTheme();
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <div
@@ -41,6 +41,14 @@ function App() {
           >
             <Router>
               <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <ProtectedRoute isLoggedIn={isLoggedIn}>
+                      <Home />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route
                   path="/favorites"
                   element={
@@ -58,14 +66,6 @@ function App() {
                   }
                 />
                 <Route
-                  path="/home"
-                  element={
-                    <ProtectedRoute isLoggedIn={isLoggedIn}>
-                      <Home />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
                   path="/auth"
                   element={<Auth/>}
                 />
@@ -78,7 +78,7 @@ function App() {
                   }
                 />
                 <Route path="*" element={<PageNotFound/>}/>
-                  </Routes>
+              </Routes>
             </Router>
           </div>
         </ThemeProvider>

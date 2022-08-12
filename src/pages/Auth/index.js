@@ -61,9 +61,20 @@ const Auth = () => {
   const onClickLogin = useCallback(() => {
     const user = Object.values(usersObject).find((user) => user.login === formFields.login);
 
-    if (user && user.password === formFields.password) {
+    setFormErrors({
+      ...formErrors,
+      login: !formFields?.login,
+      password: formFields.password.length < 7
+    });
+
+    if (
+      formFields.login &&
+      formFields.password.length >= 7 &&
+      user &&
+      user.password === formFields.password
+    ) {
       dispatch(setCurrentUser(user));
-      navigate("/home");
+      navigate("/");
     }
   }, [formFields, navigate, usersObject, dispatch]);
 
@@ -74,6 +85,7 @@ const Auth = () => {
         ...user,
         isVerified: true
       }));
+
       dispatch(addUserToList({
         ...user,
         isLoggedIn: true,
@@ -126,10 +138,11 @@ const Auth = () => {
   };
 
   const onClickRegistrationNext = () => {
+    console.log(formFields.password.length < 7);
     const currentErrors = {
       ...formErrors,
       login: !formFields?.login,
-      password: !formFields?.password,
+      password: formFields.password.length < 7,
       confirmPassword: !formFields?.confPassword || !isEqual(formFields.password, formFields.confPassword),
       email: !formFields?.email || !validateEmail(formFields.email)
     };
@@ -187,11 +200,14 @@ const Auth = () => {
     <PageContainer>
       <section className="container">
         <Box p={2} my={5} textAlign="center">
-          <Paper elevation={3} sx={{
-            width: "215px",
-            padding: "16px",
-            margin: "0 auto",
-          }}>
+          <Paper
+            elevation={3}
+            sx={{
+              width: "215px",
+              padding: "16px",
+              margin: "0 auto",
+            }}
+          >
             <ButtonGroup aria-label="group">
               <Button
                 onClick={() => {onClickSelectType('sign in')}}
@@ -224,10 +240,22 @@ const Auth = () => {
                   <Typography variant="h6">Sign In</Typography>
                 </Grid>
                 <Grid item xs={12} mb={2}>
-                  <TextField onChange={onChangeLogin} type="text" label="Login" fullWidth/>
+                  <TextField
+                    onChange={onChangeLogin}
+                    type="text"
+                    label="Login"
+                    error={formErrors.login}
+                    fullWidth
+                  />
                 </Grid>
                 <Grid item xs={12} mb={2}>
-                  <TextField onChange={onChangePassword} type="password" label="Password" fullWidth/>
+                  <TextField
+                    onChange={onChangePassword}
+                    type="password"
+                    label="Password"
+                    error={formErrors.password}
+                    fullWidth
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <Button
@@ -265,24 +293,35 @@ const Auth = () => {
                       />
                     </Grid>
                     <Grid item xs={12} mb={2}>
-                      <TextField onChange={onChangePassword} error={formErrors.password} type="password" label="Password" fullWidth/>
+                      <TextField
+                        onChange={onChangePassword}
+                        error={formErrors.password}
+                        type="password"
+                        label="Password"
+                        fullWidth
+                      />
                     </Grid>
                     <Grid item xs={12} mb={2}>
                       <TextField
                         onChange={onChangeConfPassword}
                         error={formErrors.confirmPassword}
-                        type="text"
+                        type="password"
                         label="Confirm password"
                         fullWidth
                       />
                     </Grid>
                     <Grid item xs={12} mb={2}>
-                      <TextField onChange={onChangeEmail} error={formErrors.email} type="email" label="Email" fullWidth/>
+                      <TextField
+                        onChange={onChangeEmail}
+                        error={formErrors.email}
+                        type="email"
+                        label="Email"
+                        fullWidth
+                      />
                     </Grid>
                     <Grid item xs={12} mb={2}>
                       <Button
                         variant="outlined"
-                        // onClick={onClickRegister}
                         onClick={onClickRegistrationNext}
                       >
                         Next

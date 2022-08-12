@@ -5,7 +5,8 @@ import { fetchWeatherForecast } from './weatherForecast.thunks';
 const initialState = {
   status: 'idle',
   errors: null,
-  currentCity: null
+  currentCity: null,
+  isLoading: false
 };
 
 const weatherForecastSlice = createSlice({
@@ -17,14 +18,25 @@ const weatherForecastSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchWeatherForecast.pending, (state, action) => {
-      //
+    builder.addCase(fetchWeatherForecast.pending, (state, { meta }) => {
+      state.currentRequestId = meta.requestId;
+      state.isLoading = true;
     });
-    builder.addCase(fetchWeatherForecast.fulfilled, (state, action) => {
-      //
+    builder.addCase(fetchWeatherForecast.fulfilled, (state, { meta }) => {
+      const { requestId } = meta;
+
+      if (state.currentRequestId === requestId) {
+        state.currentRequestId = undefined;
+        state.isLoading = false;
+      }
     });
-    builder.addCase(fetchWeatherForecast.rejected, (state, action) => {
-      // console.log(action);
+    builder.addCase(fetchWeatherForecast.rejected, (state, { meta }) => {
+      const { requestId } = meta;
+
+      if (state.currentRequestId === requestId) {
+        state.currentRequestId = undefined;
+        state.isLoading = false;
+      }
     });
   }
 });

@@ -31,7 +31,7 @@ const Header = memo(() => {
   return (
     <header>
       <div className={style.header + " container"}>
-        <Link to="/home">
+        <Link to="/">
           <div className={style.logoContainer}>
             <img src={logo} alt="Logo" width={48} height={48}/>
           </div>
@@ -39,7 +39,7 @@ const Header = memo(() => {
         <nav>
           <ul className={style.mainNavList}>
             <li>
-              <Link to="/home">{i18l.components.Header.menu.home[language]}</Link>
+              <Link to="/">{i18l.components.Header.menu.home[language]}</Link>
             </li>
           </ul>
         </nav>

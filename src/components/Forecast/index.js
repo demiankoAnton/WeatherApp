@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link as UILink, Paper, Grid, IconButton } from '@mui/material';
+import { Link as UILink, Paper, Grid, IconButton, CircularProgress, Box } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import useForecastCity from '../../hooks/useForecastCity';
@@ -18,11 +18,13 @@ import {
 } from '../../redux/slices/userSlice/user.selectors';
 
 import i18l from '../../l18i.json';
+import {getIsLoading} from '../../redux/slices/weatherForecastSlice/weatherForecast.selectors';
 
 const Forecast = () => {
   const dispatch = useDispatch();
   const language = useSelector(getUserLang);
   const favoriteCities = useSelector(getFavoriteCities);
+  const isLoading = useSelector(getIsLoading);
   const [isFavorite, setIsFavorite] = useState(false);
 
   const city = useForecastCity();
@@ -43,6 +45,20 @@ const Forecast = () => {
       dispatch(removeCityFromFavorite(city.location.name));
     }
   }, [city, content, isFavorite]);
+  console.log(isLoading);
+  if (isLoading) {
+    return (
+      <Box sx={{
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "390px",
+        backgroundColor: "rgba(255, 255, 255, 0.3)"
+      }}>
+        <CircularProgress />
+      </Box>
+    )
+  }
 
   return (
     <>
@@ -61,7 +77,11 @@ const Forecast = () => {
 
             {content && (
               <Grid item xs={12} sx={{ "& .MuiBox-root .MuiTabs-root": { ml: "25%" } }}>
-                <IconButton sx={{position: "absolute", right: 0, zIndex: 10}} aria-label="add to favorites" onClick={onClickFavorite}>
+                <IconButton
+                  sx={{position: "absolute", right: 0, zIndex: 10}}
+                  aria-label="add to favorites"
+                  onClick={onClickFavorite}
+                >
                   <FavoriteIcon sx={iconStyle} />
                 </IconButton>
                 <MUITabs tabsContent={content} />

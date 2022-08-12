@@ -9,7 +9,11 @@ const City = () => {
   return (
     <PageContainer>
       <section className="container">
-        <MUITabs tabsContent={[
+        <MUITabs sx={{
+          "& > .MuiBox-root > .MuiTabs-root .MuiButtonBase-root": {
+            background: "rgba(255, 255, 255, 0.6)"
+          }
+        }} tabsContent={[
           {
             label: "Forecast",
             content: <Forecast />

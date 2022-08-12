@@ -1,6 +1,14 @@
 import {useCallback, useEffect, useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, Typography, CardContent, CardMedia, IconButton, CardActions } from '@mui/material';
+import {
+  Card,
+  Typography,
+  CardContent,
+  CardMedia,
+  IconButton,
+  CardActions,
+  Skeleton,
+} from '@mui/material';
 
 import { addEventToFavorites, removeEventFromFavorites } from '../../../redux/slices/userSlice/user.slice';
 import {
@@ -36,7 +44,6 @@ const EventCard = memo(({ event, eventType }) => {
       dispatch(addEventToFavorites(event));
     } else {
       setIsFavorite(false);
-
       dispatch(removeEventFromFavorites(event.match));
     }
   }, [isFavorite]);

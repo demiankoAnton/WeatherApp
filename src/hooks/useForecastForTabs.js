@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
-import style from '../components/Forecast/Forecast.module.scss';
-import { Grid, Typography, Box } from '@mui/material';
 import {useSelector} from 'react-redux';
-import {getUserSettings} from '../redux/slices/userSlice/user.selectors';
-import { default as DateFns } from '@date-io/date-fns';
+import { Grid, Typography, Box } from '@mui/material';
+import dayjs from 'dayjs';
+
+import style from '../components/Forecast/Forecast.module.scss';
+import { getUserSettings } from '../redux/slices/userSlice/user.selectors';
 
 const useForecastForTabs = (content) => {
   const settings = useSelector(getUserSettings);
@@ -20,7 +21,7 @@ const useForecastForTabs = (content) => {
 
 const ForecastTabContent = ({currentDay, settings}) => {
   const { tempMetric, speedMetric } = settings;
-  const date = new DateFns();
+
   return (
     <>
       <Grid container>
@@ -46,13 +47,14 @@ const ForecastTabContent = ({currentDay, settings}) => {
       <Grid item xs={12} sx={{mt: 3}}>
         <Box className={style.hourly}>
           {currentDay.hour.map((current) => {
+            //console.log();
             return (
               <Box
                 key={current?.time_epoch}
                 className={style.hourTemperature}
                 sx={{height: "100%"}}
               >
-                <Typography fontSize={10} mb="auto">{date.getHours(new Date(current.time))}:00</Typography>
+                <Typography fontSize={10} mb="auto">{dayjs(new Date(current.time)).hour()}:00</Typography>
                 <Typography fontSize={14}>{current[`temp_${tempMetric}`]}</Typography>
                 <Box
                   className={style.hourTemperatureCol}

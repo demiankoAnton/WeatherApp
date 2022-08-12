@@ -17,6 +17,14 @@ body,
     min-height: 100%;
 }
 
+
+
+#dark {
+    header a {
+        color: #FFFFFF;
+    }
+}
+
 .App {
     flex-direction: column;
     background-repeat: no-repeat !important;

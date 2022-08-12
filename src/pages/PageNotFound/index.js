@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Box } from '@mui/material';
+import { Paper, Grid } from '@mui/material';
 
 import { getUserLang } from '../../redux/slices/userSlice/user.selectors';
 
@@ -12,24 +12,28 @@ const PageNotFound = () => {
 
   return (
     <PageContainer>
-      <Box
+      <Grid
         className="container"
         sx={{
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
         height: "100%"
       }}>
-        <Box sx={{
+        <Paper
+          elevation={3}
+          sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          p: 3
         }}
              >
           <h2>{i18l.pages.notFound.title[language]}</h2>
           <h4>{i18l.pages.notFound.subtitle[language]}</h4>
-        </Box>
-      </Box>
+        </Paper>
+      </Grid>
     </PageContainer>
   );
 }

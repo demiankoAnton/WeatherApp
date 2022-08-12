@@ -10,11 +10,20 @@ const MUITabs = memo(({ tabsContent }) => {
   }, []);
 
   return (
-    <>
+    <Box sx={{position: "relative"}}>
       <Box mt={2}>
-        <Tabs value={currentTab} aria-label="basic tabs" onChange={onClickTabChange}>
+        <Tabs
+          value={currentTab}
+          aria-label="basic tabs"
+          onChange={onClickTabChange}
+        >
           {tabsContent.map(({ label }, index) =>
-            <Tab sx={{borderBottom: 1, borderColor: 'text.secondary'}} key={`tab_${label}_${index}`} label={label} value={index}/>
+            <Tab
+              sx={{borderBottom: 1, borderColor: 'text.secondary'}}
+              key={`tab_${label}_${index}`}
+              label={label}
+              value={index}
+            />
           )}
         </Tabs>
       </Box>
@@ -27,7 +36,7 @@ const MUITabs = memo(({ tabsContent }) => {
           {content}
         </TabPanel>
       )}
-    </>
+    </Box>
   );
 });
 
