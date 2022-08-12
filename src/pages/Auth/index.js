@@ -186,22 +186,29 @@ const Auth = () => {
   return (
     <PageContainer>
       <section className="container">
-        <Box my={5} textAlign="center">
-          <ButtonGroup aria-label="group">
-            <Button
-              onClick={() => {onClickSelectType('sign in')}}
-              aria-label=""
-              disabled={isUser}
-            >
-              Sign In
-            </Button>
-            <Button
-              disabled={!isUser}
-              onClick={() => {onClickSelectType('sign up')}}
-            >
-              Sign Up
-            </Button>
-          </ButtonGroup>
+        <Box p={2} my={5} textAlign="center">
+          <Paper elevation={3} sx={{
+            width: "215px",
+            padding: "16px",
+            margin: "0 auto",
+          }}>
+            <ButtonGroup aria-label="group">
+              <Button
+                onClick={() => {onClickSelectType('sign in')}}
+                aria-label=""
+                disabled={isUser}
+              >
+                Sign In
+              </Button>
+              <Button
+                disabled={!isUser}
+                onClick={() => {onClickSelectType('sign up')}}
+              >
+                Sign Up
+              </Button>
+            </ButtonGroup>
+          </Paper>
+
         </Box>
         <Paper elevation={3} sx={{
           maxWidth: "400px",
@@ -265,7 +272,7 @@ const Auth = () => {
                         onChange={onChangeConfPassword}
                         error={formErrors.confirmPassword}
                         type="text"
-                        label="Key"
+                        label="Confirm password"
                         fullWidth
                       />
                     </Grid>
@@ -286,6 +293,7 @@ const Auth = () => {
                   <>
                   <Grid item xs={12}>
                     <Typography variant="h6" pb={2}>Please enter validation key</Typography>
+                    <Typography variant="span" fontSize={13} pb={2}>Hint: in localStorega->weatherAppUser->validationKey</Typography>
                     <TextField
                       onChange={onChangeVerificationKey}
                       type="text"
