@@ -6,8 +6,7 @@ import {
   CardContent,
   CardMedia,
   IconButton,
-  CardActions,
-  Skeleton,
+  CardActions
 } from '@mui/material';
 
 import { addEventToFavorites, removeEventFromFavorites } from '../../../redux/slices/userSlice/user.slice';
@@ -36,7 +35,7 @@ const EventCard = memo(({ event, eventType }) => {
         setIsFavorite(true);
       }
     }
-  }, []);
+  }, [favoriteEvents, event.match]);
 
   const onClickFavorite = useCallback(() => {
     if (!isFavorite) {
@@ -46,7 +45,7 @@ const EventCard = memo(({ event, eventType }) => {
       setIsFavorite(false);
       dispatch(removeEventFromFavorites(event.match));
     }
-  }, [isFavorite]);
+  }, [isFavorite, dispatch, event]);
 
   return (
     <Card

@@ -25,8 +25,6 @@ const THEMES = {
 const DEFAULT_USER_SETTINGS = {
   login: null,
   password: null,
-  name: null,
-  email: null,
   isLoggedIn: null,
   isVerified: false,
   validationKey: null,
@@ -34,7 +32,10 @@ const DEFAULT_USER_SETTINGS = {
     lang: 'EN',
     theme: 'light',
     tempMetric: 'c',
-    speedMetric: "kph"
+    speedMetric: "kph",
+    firstName: null,
+    lastName: null,
+    email: null
   },
   favorites: {
     cities: [],

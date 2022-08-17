@@ -3,7 +3,10 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Grid, Box } from '@mui/material';
 
-import { removeCityFromFavorite } from '../../redux/slices/userSlice/user.slice';
+import {
+  removeCityFromFavorite,
+  removeEventFromFavorites,
+} from '../../redux/slices/userSlice/user.slice';
 
 import Search from '../../components/Search';
 import PageContainer from '../../components/PageContainer';
@@ -21,10 +24,14 @@ const Home = () => {
 
   const onClickCityListItem = useCallback((event, city) => {
     navigate(`/city/${city}`);
-  }, []);
+  }, [navigate]);
 
   const onClickDeleteListItem = useCallback((city) => {
     dispatch(removeCityFromFavorite(city));
+  }, [dispatch]);
+
+  const onClickDeleteEventListItem = useCallback((event) => {
+    dispatch(removeEventFromFavorites(event));
   }, [dispatch]);
 
   return (
@@ -43,7 +50,7 @@ const Home = () => {
                 />
                 <FavoritesList
                   items={preparedEvents ?? {}}
-                  //onClickItem={onClickDeleteListItem}
+                  onClickDeleteItem={onClickDeleteEventListItem}
                 />
               </Grid>
               <Grid item xs={9} mt={2}>

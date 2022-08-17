@@ -1,5 +1,9 @@
 export const getUser = (state) => state.userSlice;
 
+export const getUserFirstName = (state) => state.userSlice.settings.firstName;
+
+export const getUserLastName = (state) => state.userSlice.settings.lastName;
+
 export const getUserTheme = (state) => state.userSlice.settings.theme;
 
 export const getUserLang = (state) => state.userSlice.settings.lang;

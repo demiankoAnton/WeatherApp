@@ -28,13 +28,16 @@ const LangSwitcher = () => {
   }, []);
 
   return (
-    <Box sx={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      borderLeft: "1px solid rgba(0, 0, 0, 0.2)",
-      borderRight: "1px solid rgba(0, 0, 0, 0.2)"
-    }}>
+    <Box
+      id="langSwitcher"
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        borderLeft: "1px solid rgba(0, 0, 0, 0.2)",
+        borderRight: "1px solid rgba(0, 0, 0, 0.2)"
+      }}
+    >
       <Button
         aria-controls={anchorElement ?? undefined}
         aria-haspopup="true"
@@ -61,6 +64,7 @@ const LangSwitcher = () => {
             key={lang}
             onClick={onClickSetLanguage}
             value={lang}
+            color="primary"
           >{lang}</MenuItem>
         )}
       </Menu>

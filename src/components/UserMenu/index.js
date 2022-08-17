@@ -1,9 +1,21 @@
 import { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
-import { Avatar, Box, Drawer, List, Divider, ListItem, ListItemButton } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Avatar,
+  Box,
+  Drawer,
+  List,
+  Divider,
+  ListItem,
+  ListItemButton,
+  Typography,
+} from '@mui/material';
 
-import { getUserLang } from '../../redux/slices/userSlice/user.selectors';
+import {
+  getUserFirstName,
+  getUserLang,
+} from '../../redux/slices/userSlice/user.selectors';
 import { logOut } from '../../redux/slices/userSlice/user.slice';
 
 import i18l from '../../l18i.json';
@@ -11,6 +23,7 @@ import i18l from '../../l18i.json';
 const UserMenu = () => {
   const dispatch = useDispatch();
   const language = useSelector(getUserLang);
+  const name = useSelector(getUserFirstName);
   const [isOpened, setIsOpened] = useState(false);
 
   const onClickLogout = useCallback(() => {
@@ -51,6 +64,7 @@ const UserMenu = () => {
             onClick={toggleDrawer}
             alt="User avatar" src="https://mui.com/static/images/avatar/1.jpg"
           />
+          <Typography variant="h6" textAlign="center">{name}</Typography>
           <Divider />
           <List>
             <ListItem disablePadding>
@@ -59,7 +73,7 @@ const UserMenu = () => {
                   color: "red"
                 }
               }}>
-                <Link className="root: darkLink" to="/favorites">
+                <Link to="/favorites">
                   {i18l.components.UserMenu.favorites[language]}
                 </Link>
               </ListItemButton>

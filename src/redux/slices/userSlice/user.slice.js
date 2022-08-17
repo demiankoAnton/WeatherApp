@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { setToLocalStorage } from '../../../utils/user';
+import { snackActions } from '../../../utils/notices';
+
 import { DEFAULT_USER_SETTINGS } from '../../../constants';
 
 const initialState = {
@@ -16,10 +18,24 @@ const userSlice = createSlice({
       state.settings = action.payload;
 
       setToLocalStorage(state);
+
+      snackActions.success('Settings changed');
     },
 
     setLanguage(state, action) {
       state.settings.lang = action.payload;
+
+      setToLocalStorage(state);
+    },
+
+    setFirstName(state, action) {
+      state.firstName = action.payload;
+
+      setToLocalStorage(state);
+    },
+
+    setLastName(state, action) {
+      state.lastName = action.payload;
 
       setToLocalStorage(state);
     },
@@ -69,10 +85,10 @@ const userSlice = createSlice({
     setCurrentUser(state, action) {
       localStorage.setItem(
         "weatherAppUser",
-        JSON.stringify({...action.payload, isLoggedIn: true})
+        JSON.stringify({...action.payload})
       );
 
-      return {...action.payload, isLoggedIn: true};
+      return action.payload;
     },
 
     addUserToList(state, action) {
@@ -91,6 +107,8 @@ const userSlice = createSlice({
 
 export const {
   setUserSettings,
+  setFirstName,
+  setLastName,
   setTheme,
   addCityToFavorite,
   removeCityFromFavorite,

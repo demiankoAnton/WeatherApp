@@ -8,15 +8,19 @@ import {
   getSportEvents,
 } from '../../redux/slices/weatherSportEventsSlice/weatherSportsEvents.selectors';
 import { getCity } from '../../redux/slices/weatherForecastSlice/weatherForecast.selectors';
+import { getUserLang } from '../../redux/slices/userSlice/user.selectors';
 
 import EventCard from './EventCard';
 import EventSkeleton from './EventSkeleton';
+
+import i18l from '../../l18i.json';
 
 import style from './SportEvents.module.scss';
 
 const SportEvents = () => {
   const dispatch  = useDispatch();
   const city = useSelector(getCity);
+  const language = useSelector(getUserLang);
   const isLoading = useSelector(getIsLoading)
   const sportEvents = useSelector(getSportEvents);
 
@@ -34,7 +38,9 @@ const SportEvents = () => {
         <>
           {sportEvents?.football.length > 0 && (
             <Box>
-              <Typography sx={{fontSize: 25, my: 2}}>Football Events</Typography>
+              <Typography sx={{fontSize: 25, my: 2}}>
+                {i18l.components.SportEvents.football[language]}
+              </Typography>
               <Divider />
               <div className={style.eventsContainer}>
                 {isLoading
@@ -52,7 +58,9 @@ const SportEvents = () => {
           )}
           {sportEvents?.cricket.length > 0 && (
             <Box>
-              <Typography sx={{fontSize: 25, my: 2}}>Cricket Events</Typography>
+              <Typography sx={{fontSize: 25, my: 2}}>
+                {i18l.components.SportEvents.cricket[language]}
+              </Typography>
               <Divider />
               <div className={style.eventsContainer}>
                 {isLoading
@@ -70,7 +78,9 @@ const SportEvents = () => {
           )}
           {sportEvents?.golf.length > 0 && (
             <Box>
-              <Typography sx={{fontSize: 25, my: 2}}>Golf Events</Typography>
+              <Typography sx={{fontSize: 25, my: 2}}>
+                {i18l.components.SportEvents.golf[language]}
+              </Typography>
               <Divider />
               <div className={style.eventsContainer}>
                 {isLoading

@@ -1,34 +1,46 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { fetchWeatherHistory } from './weatherHistory.thunks';
+import {snackActions} from '../../../utils/notices';
 
 const initialState = {
   date: null,
-  historyDateForecast: null
+  historyDateForecast: null,
+  currentRequestId: null,
+
 };
 
 const weatherHistorySlice = createSlice({
   name: 'weatherHistory',
   initialState,
   reducers: {
-    setHistoryDate(state, action) {
-      state.date = action.payload;
-    },
     setHistoryDateForecast(state, action) {
       state.historyDateForecast = action.payload;
     }
   },
   extraReducers: (builder) => {
-    // builder.addCase(fetchWeatherHistory.pending, (state, action) => {
-    //   //
-    // });
-    // builder.addCase(fetchWeatherForecast.fulfilled, (state, action) => {
-    //   //
-    // });
-    // builder.addCase(fetchWeatherForecast.rejected, (state, action) => {
-    //   // console.log(action);
-    // });
+    builder.addCase(fetchWeatherHistory.pending, (state, { meta }) => {
+      state.currentRequestId = meta.requestId;
+    });
+    builder.addCase(fetchWeatherHistory.fulfilled, (state, action) => {
+      const { requestId } = action.meta;
+      if (state.currentRequestId === requestId) {
+        state.currentRequestId = undefined;
+
+        state.historyDateForecast = action.payload;
+      }
+    });
+    builder.addCase(fetchWeatherHistory.rejected, (state, action) => {
+      const { requestId } = action.meta;
+
+      if (state.currentRequestId === requestId) {
+        state.currentRequestId = undefined;
+
+        snackActions.error(action.payload);
+      }
+    });
   }
 });
 
-export const { setHistoryDate, setHistoryDateForecast } = weatherHistorySlice.actions;
+export const { setHistoryDateForecast } = weatherHistorySlice.actions;
 
 export default weatherHistorySlice.reducer;

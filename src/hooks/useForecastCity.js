@@ -1,7 +1,8 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCity } from '../redux/slices/weatherForecastSlice/weatherForecast.selectors';
 import { useLocation, useParams } from 'react-router-dom';
+
+import { getCity } from '../redux/slices/weatherForecastSlice/weatherForecast.selectors';
 import { fetchWeatherForecast } from '../redux/slices/weatherForecastSlice/weatherForecast.thunks';
 
 const useForecastCity = () => {
@@ -16,7 +17,7 @@ const useForecastCity = () => {
     }
   }, [cityName, pathname, dispatch]);
 
-  return useMemo(() => city, [city, cityName, pathname]);
+  return useMemo(() => city, [city]);
 }
 
 export default useForecastCity;

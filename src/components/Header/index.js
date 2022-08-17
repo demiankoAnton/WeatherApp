@@ -1,7 +1,7 @@
 import { memo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography } from '@mui/material';
+import { Typography, MenuItem } from '@mui/material';
 
 import { setTheme } from '../../redux/slices/userSlice/user.slice';
 import {
@@ -26,21 +26,23 @@ const Header = memo(() => {
 
   const onClickThemeSwitch = useCallback((event) => {
     dispatch(setTheme(event.target.checked));
-  }, [dispatch, userTheme]);
+  }, [dispatch]);
 
   return (
     <header>
       <div className={style.header + " container"}>
-        <Link to="/">
+        <Link to="/" className="navLink">
           <div className={style.logoContainer}>
             <img src={logo} alt="Logo" width={48} height={48}/>
           </div>
         </Link>
         <nav>
           <ul className={style.mainNavList}>
-            <li>
-              <Link to="/">{i18l.components.Header.menu.home[language]}</Link>
-            </li>
+            <MenuItem>
+              <Link to="/" style={{textDecoration: 'none'}}>
+                {i18l.components.Header.menu.home[language]}
+              </Link>
+            </MenuItem>
           </ul>
         </nav>
         <div className={style.settingsContainer + " settingsContainer"}>
@@ -58,7 +60,9 @@ const Header = memo(() => {
           {isLoggedIn ? (
             <UserMenu />
           ) : (
-            <Link to="/auth">Login</Link>
+            <Link to="/auth">
+              {i18l.components.Header.login[language]}
+            </Link>
           )}
         </div>
       </div>

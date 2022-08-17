@@ -1,29 +1,33 @@
-import MUITabs from '../../components/generic/MUITabs';
+import { useSelector } from 'react-redux';
 
+import MUITabs from '../../components/generic/MUITabs';
 import PageContainer from '../../components/PageContainer';
 import Forecast from '../../components/Forecast';
 import History from '../../components/History';
 import SportEvents from '../../components/SportEvents';
 
+import { getUserLang } from '../../redux/slices/userSlice/user.selectors';
+
+import i18l from '../../l18i.json';
+
 const City = () => {
+  const language = useSelector(getUserLang);
+
   return (
     <PageContainer>
-      <section className="container">
-        <MUITabs sx={{
-          "& > .MuiBox-root > .MuiTabs-root .MuiButtonBase-root": {
-            background: "rgba(255, 255, 255, 0.6)"
-          }
-        }} tabsContent={[
+      <section className="city container">
+        <MUITabs
+          tabsContent={[
           {
-            label: "Forecast",
+            label: i18l.pages.City.tabs.forecast[language] ?? "",
             content: <Forecast />
           },
           {
-            label: "History",
+            label: i18l.pages.City.tabs.history[language] ?? "",
             content: <History />
           },
           {
-            label: "Sport Events",
+            label: i18l.pages.City.tabs.events[language] ?? "",
             content: <SportEvents />
           }
         ]} />

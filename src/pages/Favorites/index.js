@@ -29,13 +29,9 @@ const Favorites = () => {
     dispatch(removeCityFromFavorite(city));
   }, [dispatch]);
 
-  const onClickEventListItem = useCallback((event, e) => {
-    // TODO: Implement navigation to single event page
-  }, []);
-
   const onClickDeleteEventListItem = useCallback((event) => {
     dispatch(removeEventFromFavorites(event));
-  }, []);
+  }, [dispatch]);
 
   return (
     <PageContainer>
@@ -53,7 +49,6 @@ const Favorites = () => {
             <FavoritesList
               title="Favorite Events"
               items={preparedEvents ?? {}}
-              onClickItem={onClickEventListItem}
               onClickDeleteItem={onClickDeleteEventListItem}
             />
           </Grid>

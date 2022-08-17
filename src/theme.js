@@ -16,7 +16,6 @@ export const darkTheme = createTheme({
     background: {
       default: "rgba(18, 18, 18, 1)",
       paper: "rgba(18, 18, 18, 0.4)",
-
     },
     typography: {
       h6: {

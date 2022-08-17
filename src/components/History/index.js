@@ -16,15 +16,11 @@ const History = () => {
     return dayjs().subtract(7, 'day');
   }, []);
 
-  const maxDate = useMemo(() => {
-    return dayjs().add(1, 'day');
-  }, []);
-
   const onChangeDate = useCallback((event) => {
     const current = dayjs(event).format("YYYY-MM-DD")
     setCurrentDate(current);
     dispatch(fetchWeatherHistory(current));
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="historyDatePicker">
@@ -38,7 +34,7 @@ const History = () => {
           renderInput={(params) => <TextField value={currentDate} {...params} />}
           value={currentDate}
           minDate={minDate}
-          maxDate={maxDate}
+          maxDate={dayjs(new Date())}
         />
       </Paper>
 

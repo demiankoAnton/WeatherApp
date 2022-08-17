@@ -1,5 +1,4 @@
 import { memo, useState, useCallback } from 'react';
-
 import { Box, Tabs, Tab } from '@mui/material';
 
 const MUITabs = memo(({ tabsContent }) => {

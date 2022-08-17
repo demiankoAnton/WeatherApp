@@ -1,8 +1,14 @@
 import { memo, useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Paper, ListItemText, Typography, ListItemButton, ListItemIcon, List as MUIList } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
+import { getUserLang } from '../../redux/slices/userSlice/user.selectors';
+
+import i18l from '../../l18i.json';
+
 const List = memo(({ items, title, onClickItem = () => {}, onClickDeleteItem = () => {} }) => {
+  const language = useSelector(getUserLang);
   const [selectedItem, setSelectedItem] = useState(null);
 
   const onClickListItem = useCallback((event, item) => {
@@ -68,7 +74,7 @@ const List = memo(({ items, title, onClickItem = () => {}, onClickDeleteItem = (
           my={2}
           pl={2}
         >
-          List is empty
+          {i18l.components.List.empty[language]}
         </Typography>
       )}
     </Paper>

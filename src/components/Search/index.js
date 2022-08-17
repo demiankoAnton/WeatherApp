@@ -41,6 +41,7 @@ const Search = () => {
       elevation={3}
     >
       <Autocomplete
+        id="searchAutocomplete"
         disablePortal
         autoHighlight
         isOptionEqualToValue={(option, value) => option.id === value.id}

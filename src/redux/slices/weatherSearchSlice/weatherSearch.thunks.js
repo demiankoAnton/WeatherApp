@@ -5,24 +5,27 @@ import { API_URL, API_ENDPOINTS, API_HEADERS } from '../../../constants';
 
 export const fetchWeatherSearch = createAsyncThunk(
   'weatherSearch',
-  async (value, {getState, rejectWithValue, dispatch}) => {
-    try {
-      const { lang } = getState().userSlice.settings;
-
-      const response = await axios
+  async (value, { rejectWithValue }) => {
+    return await axios
       .get([API_URL, API_ENDPOINTS.search].join('/'), {
-          headers: API_HEADERS,
-          params: {
-            q: value.toLowerCase(),
-            lang: lang ?? 'EN'
-          },
-        })
-        .then(({ data }) => data);
+        headers: API_HEADERS,
+        params: {
+          q: value.toLowerCase()
+        },
+      })
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        let errorText = '';
 
-      return response;
-    }
-    catch (error) {
-      return rejectWithValue(error.message);
-    }
+        if (error.code === "ERR_NETWORK") {
+          errorText = error.message;
+        } else {
+          errorText = error.response.data.error.message;
+        }
+
+        return rejectWithValue(errorText);
+      });
   },
 );

@@ -14,27 +14,33 @@ import {
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 
 import useUsersObject from '../../hooks/useUsersObject';
-
 import PageContainer from '../../components/PageContainer';
 
 import {
   addUserToList,
   setCurrentUser,
 } from '../../redux/slices/userSlice/user.slice';
-import { getUser } from '../../redux/slices/userSlice/user.selectors';
+import {
+  getUser,
+  getUserLang,
+} from '../../redux/slices/userSlice/user.selectors';
+
+import { snackActions } from '../../utils/notices';
 import {
   isError,
   isEqual,
   validateEmail,
 } from '../../utils/forms';
 
-import {DEFAULT_USER_SETTINGS} from '../../constants';
+import { DEFAULT_USER_SETTINGS } from '../../constants';
+
+import i18l from '../../l18i.json';
 
 const initialFormState = {
   type: "login",
   login: "",
   password: "",
-  confPassword: "",
+  confirmPassword: "",
   email: ""
 }
 
@@ -49,6 +55,7 @@ const Auth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(getUser);
+  const language = useSelector(getUserLang);
   const [isUser, setIsUser] = useState(true);
   const [isUserValidated] = useState(user?.isVerified);
   const [formFields, setFormFields] = useState(initialFormState);
@@ -58,14 +65,73 @@ const Auth = () => {
 
   const usersObject = useUsersObject();
 
+  const onChangeLogin = useCallback((event) => {
+    setFormFields({
+      ...formFields,
+      login: event.target.value
+    });
+  }, [formFields]);
+
+  const onChangePassword = useCallback((event) => {
+    setFormFields({
+      ...formFields,
+      password: event.target.value
+    });
+  }, [formFields]);
+
+  const onChangeConfPassword = useCallback((event) => {
+    setFormFields({
+      ...formFields,
+      confirmPassword: event.target.value
+    });
+  }, [formFields]);
+
+  const onChangeEmail = useCallback((event) => {
+    setFormFields({
+      ...formFields,
+      email: event.target.value
+    });
+  }, [formFields]);
+
+  const onClickSelectType = useCallback((type = 'sign in') => {
+    if (type === 'sign up') {
+      setIsUser(false);
+    } else {
+      setIsUser(true);
+    }
+  }, []);
+
+  const onClickValidationBack = useCallback(() => {
+    setRegistrationStep(0);
+  }, []);
+
+  const onChangeFirstName = useCallback((event) => {
+    setFormFields({
+      ...formFields,
+      firstName: event.target.value
+    });
+  }, [formFields]);
+
+  const onChangeLastName = useCallback((event) => {
+    setFormFields({
+      ...formFields,
+      lastName: event.target.value
+    });
+  }, [formFields]);
+
   const onClickLogin = useCallback(() => {
     const user = Object.values(usersObject).find((user) => user.login === formFields.login);
 
-    setFormErrors({
-      ...formErrors,
+    const currentErrors = {
       login: !formFields?.login,
-      password: formFields.password.length < 7
-    });
+      password: formFields.password.length < 7,
+      email: false,
+      confirmPassword: false
+    };
+
+    setFormErrors(currentErrors);
+
+    isError(currentErrors);
 
     if (
       formFields.login &&
@@ -79,11 +145,15 @@ const Auth = () => {
   }, [formFields, navigate, usersObject, dispatch]);
 
   const onClickRegister = useCallback(() => {
-    if (!user.isVerified && user.validationKey === +verificationKey) {
+    if (user.validationKey !== +verificationKey) {
+      snackActions.error('Validation key is incorrect!')
+    }
 
+    if (!user.isVerified && user.validationKey === +verificationKey) {
       dispatch(setCurrentUser({
         ...user,
-        isVerified: true
+        isVerified: true,
+        isLoggedIn: true,
       }));
 
       dispatch(addUserToList({
@@ -93,80 +163,43 @@ const Auth = () => {
       }));
 
       setIsUser(true);
+
+      navigate('/');
     }
 
-  }, [dispatch, user, verificationKey]);
+  }, [dispatch, user, verificationKey, navigate]);
 
-  const onChangeLogin = (event) => {
-    setFormFields({
-      ...formFields,
-      login: event.target.value
-    });
-  };
-
-  const onChangePassword = (event) => {
-    setFormFields({
-      ...formFields,
-      password: event.target.value
-    });
-  };
-
-  const onChangeConfPassword = (event) => {
-    setFormFields({
-      ...formFields,
-      confPassword: event.target.value
-    });
-  };
-
-  const onChangeEmail = (event) => {
-    setFormFields({
-      ...formFields,
-      email: event.target.value
-    });
-  };
-
-  const onClickSelectType = useCallback((type = 'sign in') => {
-    if (type === 'sign up') {
-      setIsUser(false);
-    } else {
-      setIsUser(true);
-    }
-  }, []);
-
-  const onClickValidationBack = () => {
-    setRegistrationStep(0);
-  };
-
-  const onClickRegistrationNext = () => {
-    console.log(formFields.password.length < 7);
+  const onClickRegistrationNext = useCallback(() => {
     const currentErrors = {
-      ...formErrors,
       login: !formFields?.login,
       password: formFields.password.length < 7,
-      confirmPassword: !formFields?.confPassword || !isEqual(formFields.password, formFields.confPassword),
+      confirmPassword: !formFields?.confirmPassword || !isEqual(formFields.password, formFields.confirmPassword),
       email: !formFields?.email || !validateEmail(formFields.email)
     };
 
     setFormErrors(currentErrors);
 
-    if (!isError(currentErrors)) {
+    const isErrors = isError(currentErrors);
+
+    if (!isErrors) {
       const totalUsers = usersObject ? Object.keys(usersObject).length : 0;
       const lastUserId = totalUsers ? Object.keys(usersObject)[totalUsers - 1] : 0;
 
       const user = Object.values(usersObject).find((user) => user.login === formFields.login);
 
       if (user) {
+        snackActions.error('The user with the similar Login is already exist');
         return;
       }
 
-      const verificationKey = Date.now();
+      const validationKey = Date.now(); // Dummy key generation
 
       const userSettings = {
         ...DEFAULT_USER_SETTINGS,
         login: formFields.login,
         password: formFields.password,
         email: formFields.email,
-        validationKey: verificationKey,
+        validationKey: validationKey,
       }
 
       localStorage.setItem(
@@ -185,12 +218,12 @@ const Auth = () => {
 
       dispatch(setCurrentUser({
         ...userSettings,
-        validationKey: verificationKey
+        validationKey: validationKey
       }));
 
       setRegistrationStep(1);
     }
-  };
+  }, [formFields, dispatch, usersObject]);
 
   const onChangeVerificationKey = useCallback((event) => {
     setVerificationKey(event.target.value);
@@ -203,7 +236,7 @@ const Auth = () => {
           <Paper
             elevation={3}
             sx={{
-              width: "215px",
+              display: "inline-flex",
               padding: "16px",
               margin: "0 auto",
             }}
@@ -214,13 +247,13 @@ const Auth = () => {
                 aria-label=""
                 disabled={isUser}
               >
-                Sign In
+                {i18l.pages.Auth.signIn[language]}
               </Button>
               <Button
                 disabled={!isUser}
                 onClick={() => {onClickSelectType('sign up')}}
               >
-                Sign Up
+                {i18l.pages.Auth.signUp[language]}
               </Button>
             </ButtonGroup>
           </Paper>
@@ -230,14 +263,16 @@ const Auth = () => {
           maxWidth: "400px",
           margin: "0 auto",
           "& .MuiMobileStepper-positionStatic": {
-            fontSize: 0
+            display: "none"
           }
         }}>
           <Grid container p={2}>
             {isUser ? (
               <>
                 <Grid item xs={12} mb={2}>
-                  <Typography variant="h6">Sign In</Typography>
+                  <Typography variant="h6">
+                    {i18l.pages.Auth.signIn[language]}
+                  </Typography>
                 </Grid>
                 <Grid item xs={12} mb={2}>
                   <TextField
@@ -262,7 +297,7 @@ const Auth = () => {
                     variant="outlined"
                     onClick={onClickLogin}
                   >
-                    Log in
+                    {i18l.pages.Auth.signIn[language]}
                   </Button>
                 </Grid>
               </>
@@ -281,7 +316,9 @@ const Auth = () => {
                 {registrationStep === 0 ? (
                   <>
                     <Grid item xs={12} mb={2}>
-                      <Typography variant="h6">Sign Up</Typography>
+                      <Typography variant="h6">
+                        {i18l.pages.Auth.signUp[language]}
+                      </Typography>
                     </Grid>
                     <Grid item xs={12} mb={2}>
                       <TextField
@@ -320,19 +357,39 @@ const Auth = () => {
                       />
                     </Grid>
                     <Grid item xs={12} mb={2}>
+                      <TextField
+                        onChange={onChangeFirstName}
+                        type="text"
+                        label="First Name"
+                        fullWidth
+                      />
+                    </Grid>
+                    <Grid item xs={12} mb={2}>
+                      <TextField
+                        onChange={onChangeLastName}
+                        type="text"
+                        label="Last Name"
+                        fullWidth
+                      />
+                    </Grid>
+                    <Grid item xs={12} mb={2}>
                       <Button
                         variant="outlined"
                         onClick={onClickRegistrationNext}
                       >
-                        Next
+                        {i18l.pages.Auth.next[language]}
                       </Button>
                     </Grid>
                   </>
                 ) : (
                   <>
                   <Grid item xs={12}>
-                    <Typography variant="h6" pb={2}>Please enter validation key</Typography>
-                    <Typography variant="span" fontSize={13} pb={2}>Hint: in localStorega->weatherAppUser->validationKey</Typography>
+                    <Typography variant="h6" pb={2}>
+                      {i18l.pages.Auth.enterValidationKey[language]}
+                    </Typography>
+                    <Typography variant="span" fontSize={13} pb={2}>
+                      Hint: in localStorega->weatherAppUser->validationKey
+                    </Typography>
                     <TextField
                       onChange={onChangeVerificationKey}
                       type="text"
@@ -344,7 +401,7 @@ const Auth = () => {
                       onClick={onClickRegister}
                       sx={{marginTop: 2}}
                     >
-                      End Registration
+                      {i18l.pages.Auth.endRegistration[language]}
                     </Button>
                   </Grid>
                   </>

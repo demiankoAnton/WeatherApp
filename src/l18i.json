@@ -1,7 +1,26 @@
 {
   "pages": {
     "Auth": {
-
+      "enterValidationKey": {
+        "EN": "Please enter validation key",
+        "UA": "Будь ласка, введіть ключ підтвердження"
+      },
+      "endRegistration": {
+        "EN": "End Registration",
+        "UA": "Завершити реєстрацію"
+      },
+      "next": {
+        "EN": "Next",
+        "UA": "Далі"
+      },
+      "signUp": {
+        "EN": "Sign Up",
+        "UA": "Зареєструватися"
+      },
+      "signIn": {
+        "EN": "Sign In",
+        "UA": "Увійти"
+      }
     },
     "AccessDenied": {
       "title": {
@@ -22,6 +41,22 @@
         "EN": "Seems like the page that you looking for is deleted or even it never existed.",
         "UA": "Здається, що сторінку, яку ви шукаєте, видалено або навіть її ніколи не існувало."
       }
+    },
+    "City": {
+      "tabs": {
+        "forecast": {
+          "EN": "Forecast",
+          "UA": "Прогноз"
+        },
+        "history": {
+          "EN": "History",
+          "UA": "Історія"
+        },
+        "events": {
+          "EN": "Sport Events",
+          "UA": "Спортивні події"
+        }
+      }
     }
   },
   "components": {
@@ -35,6 +70,10 @@
       "theme": {
         "EN": "Theme",
         "UA": "Тема"
+      },
+      "login": {
+        "EN": "Login",
+        "UA": "Логін"
       }
     },
     "Forecast": {
@@ -108,11 +147,58 @@
         "EN": "Search",
         "UA": "Пошук"
       }
+    },
+    "List": {
+      "empty": {
+        "EN": "List is empty",
+        "UA": "Список пустий"
+      }
+    },
+    "SportEvents": {
+      "football": {
+        "EN": "Football",
+        "UA": "Футбол"
+      },
+      "golf": {
+        "EN": "Golf",
+        "UA": "Гольф"
+      },
+      "cricket": {
+        "EN": "Cricket",
+        "UA": "Крикет"
+      }
     }
   },
   "hooks": {
     "useForecastForTabs": {
-
+      "humidity": {
+        "EN": "Humidity",
+        "UA": "Вологість"
+      },
+      "maxTemperature": {
+        "EN": "Max temperature",
+        "UA": "Макс. температура"
+      },
+      "averageTemperature": {
+        "EN": "Average temperature",
+        "UA": "Сер. температура"
+      },
+      "minTemperature": {
+        "EN": "Min temperature",
+        "UA": "Мiн. температура"
+      },
+      "condition": {
+        "EN": "Condition",
+        "UA": "Стан"
+      },
+      "chanceOfRain": {
+        "EN": "Chance of rain",
+        "UA": "Імовірність дощу"
+      },
+      "maxWind": {
+        "EN": "Max wind",
+        "UA": "Макс. швидкість вітру"
+      }
     }
   }
 }

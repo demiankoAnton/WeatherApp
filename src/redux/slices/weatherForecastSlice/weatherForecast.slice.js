@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { fetchWeatherForecast } from './weatherForecast.thunks';
+import { snackActions } from '../../../utils/notices';
 
 const initialState = {
-  status: 'idle',
   errors: null,
   currentCity: null,
   isLoading: false
@@ -22,20 +22,23 @@ const weatherForecastSlice = createSlice({
       state.currentRequestId = meta.requestId;
       state.isLoading = true;
     });
-    builder.addCase(fetchWeatherForecast.fulfilled, (state, { meta }) => {
-      const { requestId } = meta;
+    builder.addCase(fetchWeatherForecast.fulfilled, (state, action) => {
+      const { requestId } = action.meta;
 
       if (state.currentRequestId === requestId) {
         state.currentRequestId = undefined;
         state.isLoading = false;
+
+        state.currentCity = action.payload;
       }
     });
-    builder.addCase(fetchWeatherForecast.rejected, (state, { meta }) => {
-      const { requestId } = meta;
-
+    builder.addCase(fetchWeatherForecast.rejected, (state, action) => {
+      const { requestId } = action.meta;
       if (state.currentRequestId === requestId) {
         state.currentRequestId = undefined;
         state.isLoading = false;
+
+        snackActions.error(action.payload);
       }
     });
   }

@@ -1,33 +1,38 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { setHistoryDateForecast } from './weatherHistory.slice';
+import { setCurrentCity } from '../weatherForecastSlice/weatherForecast.slice';
 
 import { API_URL, API_HEADERS, API_ENDPOINTS } from '../../../constants';
-import { setCurrentCity } from '../weatherForecastSlice/weatherForecast.slice';
 
 export const fetchWeatherHistory = createAsyncThunk(
   'weather/fetchWeatherHistory',
   async (date, {getState , rejectWithValue, dispatch }) => {
-    try {
-      const { currentCity } = getState().weatherForecastSlice;
-      const { lang } = getState().userSlice.settings;
+    const { currentCity } = getState().weatherForecastSlice;
 
-      const response = await axios.get([API_URL, API_ENDPOINTS.history].join('/'), {
+    return await axios
+      .get([API_URL, API_ENDPOINTS.history].join('/'), {
         headers: API_HEADERS,
         params: {
           q: currentCity.location.name,
-          dt: date ?? '',
-          lang: lang ?? 'EN'
+          dt: date ?? ''
         }
-      }).then((response) => response.data);
+      })
+      .then((response) => {
+        dispatch(setCurrentCity(response.data));
 
-      dispatch(setHistoryDateForecast(response));
-      dispatch(setCurrentCity(response));
+        return response.data;
+      })
+      .catch((error) => {
+        let errorText = '';
 
-      return response;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+        if (error.code === "ERR_NETWORK") {
+          errorText = error.message;
+        } else {
+          errorText = error.response.data.error.message;
+        }
+
+        return rejectWithValue(errorText);
+      });
   }
 );

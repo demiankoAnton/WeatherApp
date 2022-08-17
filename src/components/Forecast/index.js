@@ -16,9 +16,9 @@ import {
   getFavoriteCities,
   getUserLang,
 } from '../../redux/slices/userSlice/user.selectors';
+import { getIsLoading } from '../../redux/slices/weatherForecastSlice/weatherForecast.selectors';
 
 import i18l from '../../l18i.json';
-import {getIsLoading} from '../../redux/slices/weatherForecastSlice/weatherForecast.selectors';
 
 const Forecast = () => {
   const dispatch = useDispatch();
@@ -44,8 +44,8 @@ const Forecast = () => {
       setIsFavorite(false);
       dispatch(removeCityFromFavorite(city.location.name));
     }
-  }, [city, content, isFavorite]);
-  console.log(isLoading);
+  }, [city, isFavorite, dispatch]);
+
   if (isLoading) {
     return (
       <Box sx={{
@@ -65,7 +65,7 @@ const Forecast = () => {
       {city && (
         <Paper className="forecast" elevation={3} sx={{p: 2}}>
           <Grid container spacing={2} position={"relative"}>
-            <Grid item xs={3} sx={{position: "absolute", top: 10 }}>
+            <Grid item xs={3} sx={{position: "absolute", top: 10, zIndex: 10 }}>
               <h3>{i18l.components.Forecast.country[language]}: {city.location.country}</h3>
               <UILink target="_blank" href={`https://www.google.com/maps/@${city.location.lat},${city.location.lon},10z`} rel="noreferrer">
                 <span>{i18l.components.Forecast.geoLocation.lat[language]}: {city.location.lat} </span>

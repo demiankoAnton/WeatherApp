@@ -11,6 +11,6 @@ export const store = configureStore({
     weatherForecastSlice,
     weatherHistorySlice,
     weatherSearchSlice,
-    weatherSportsEventsSlice
+    weatherSportsEventsSlice,
   }
 });
